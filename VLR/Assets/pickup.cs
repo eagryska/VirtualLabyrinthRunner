@@ -4,6 +4,7 @@ using System.Collections;
 public class pickup : MonoBehaviour {
     public int distance;
     public GameObject mydefault;
+    public GameObject defaultBow;
     private int counter;
 	// Use this for initialization
 	void Start () {
@@ -28,8 +29,15 @@ public class pickup : MonoBehaviour {
                 {
                     Debug.Log("picked");
                     hit.collider.gameObject.transform.parent = this.transform;
-                    hit.collider.gameObject.transform.position = mydefault.gameObject.transform.position;
-                    hit.collider.gameObject.transform.rotation = mydefault.gameObject.transform.rotation;
+                    if (hit.collider.gameObject.name == "Elven Long Bow")
+                    {
+                        hit.collider.gameObject.transform.position = defaultBow.gameObject.transform.position;
+                        hit.collider.gameObject.transform.rotation = defaultBow.gameObject.transform.rotation;
+                    } else
+                    {
+                        hit.collider.gameObject.transform.position = mydefault.gameObject.transform.position;
+                        hit.collider.gameObject.transform.rotation = mydefault.gameObject.transform.rotation;
+                    }
                     hit.collider.gameObject.active = false;
                     foreach (Transform child in transform)
                     {
