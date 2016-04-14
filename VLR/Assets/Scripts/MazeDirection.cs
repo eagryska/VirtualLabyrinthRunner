@@ -14,20 +14,13 @@ public enum WallType
     SolidWall,
     PermanentWall,
     LootRoom,
-    Door
+    Door,
+    TreasureChest
 }
 
 
 
 public static class MazeDirections {
-
-	public const int Count = 4;
-
-	public static MazeDirection RandomValue {
-		get {
-			return (MazeDirection)Random.Range(0, Count);
-		}
-	}
 
     public static T randomEnum<T>()
     {

@@ -9,31 +9,15 @@ public class Maze : MonoBehaviour
 
     public MazeWall wallPrefab;
     public MazeDoor doorPrefab;
+    public TreasureChest treasurePrefab;
 
-    private MazeWall[,] mazeWalls;
     private WallType[,] mazeData;
 
     private IntVector2 size;
     private IntVector2 start;
     private IntVector2 doorEntrance;
     private IntVector2 door;
-
-    public IntVector2 RandomCoordinates
-    {
-        get {
-            return new IntVector2(Random.Range(0, size.x), Random.Range(0, size.z));
-        }
-    }
-
-    public bool ContainsCoordinates(IntVector2 coordinate)
-    {
-        return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
-    }
-
-    public MazeWall GetWall(IntVector2 coordinates)
-    {
-        return mazeWalls[coordinates.x, coordinates.z];
-    }
+    private MazeDirection dir;
 
     public WallType GetType(IntVector2 coordinates)
     {
@@ -57,6 +41,9 @@ public class Maze : MonoBehaviour
         door = mazeSize.clone();
         doorEntrance = mazeSize.clone();
         mazeData = new WallType[size.x, size.z];
+        wallPrefab.name = "Maze Wall";
+        doorPrefab.name = "Maze Door";
+        treasurePrefab.name = "Treasure Chest";
 
         initMazeData();
         createMazeData();
@@ -94,13 +81,13 @@ public class Maze : MonoBehaviour
             }
         }
         //randomly decide entrance to loot room
-        MazeDirection dir = MazeDirections.randomEnum<MazeDirection>();
-        if (dir == MazeDirection.North)
+        dir = MazeDirections.randomEnum<MazeDirection>();
+        if (dir == MazeDirection.South)
         {
             door.z -= 2;
             doorEntrance.z -= 3;
         }
-        else if (dir == MazeDirection.South)
+        else if (dir == MazeDirection.North)
         {
             door.z += 2;
             doorEntrance.z += 3;
@@ -115,6 +102,8 @@ public class Maze : MonoBehaviour
             door.x += 2;
             doorEntrance.x += 3;
         }
+        //add Treasure Chest
+        SetType(mazeSize, WallType.TreasureChest);
     }
 
     private void createMazeData()
@@ -137,24 +126,24 @@ public class Maze : MonoBehaviour
 
             if ((position.z - 2 >= 0) && (mazeData[position.x, position.z - 2] == WallType.SolidWall) && (position.z - 2 != 0) && (position.z - 2 != size.z - 1))
             {
-                possibleDirections.Add(MazeDirection.North);
+                possibleDirections.Add(MazeDirection.South);
             }
 
             if ((position.z + 2 < size.z) && (mazeData[position.x, position.z + 2] == WallType.SolidWall) && (position.z + 2 != 0) && (position.z + 2 != size.z - 1))
             {
-                possibleDirections.Add(MazeDirection.South);
+                possibleDirections.Add(MazeDirection.North);
             }
 
             if (possibleDirections.Count > 0)
             {
                 int move = Random.Range(0, possibleDirections.Count);
-                if (possibleDirections[move] == MazeDirection.North)
+                if (possibleDirections[move] == MazeDirection.South)
                 {
                     SetType(position.x, position.z - 1, WallType.Blank);
                     position.z -= 2;
                     SetType(position, WallType.Blank);
                 }
-                else if (possibleDirections[move] == MazeDirection.South)
+                else if (possibleDirections[move] == MazeDirection.North)
                 {
                     SetType(position.x, position.z + 1, WallType.Blank);
                     position.z += 2;
@@ -201,34 +190,33 @@ public class Maze : MonoBehaviour
 
                 if (GetType(pos) == WallType.SolidWall || GetType(pos) == WallType.PermanentWall)
                 {
-                    createWall(pos);
+                    createPrefab<MazeWall>(pos, dir, wallPrefab);
                 }
-                if(GetType(pos) == WallType.Door)
+                if (GetType(pos) == WallType.Door)
                 {
-                    createDoor(pos);
+                    createPrefab<MazeDoor>(pos, dir, doorPrefab);
+                }
+                if (GetType(pos) == WallType.TreasureChest)
+                {
+                    createPrefab<TreasureChest>(pos, dir, treasurePrefab);
                 }
             }
         }
     }
 
-
-    private MazeWall createWall (IntVector2 coordinates)
+    private T createPrefab<T>(IntVector2 coordinates, MonoBehaviour type) where T : MonoBehaviour
     {
-		MazeWall newWall = Instantiate(wallPrefab) as MazeWall;
-        newWall.coordinates = coordinates;
-        newWall.name = "Maze Wall " + coordinates.x + ", " + coordinates.z;
-        newWall.transform.parent = transform;
-        newWall.transform.localPosition = new Vector3(coordinates.x * 4, 0f, coordinates.z * 4);
-		return newWall;
-	}
+        T mazeObject = Instantiate(type) as T;
+        (mazeObject).name = type.name + " " + coordinates.x + ", " + coordinates.z;
+        mazeObject.transform.parent = transform;
+        mazeObject.transform.localPosition = new Vector3(coordinates.x * 4, 0f, coordinates.z * 4);
+        return mazeObject;
+    }
 
-    private MazeDoor createDoor (IntVector2 coordinates)
+    private T createPrefab<T>(IntVector2 coordinates, MazeDirection facing, MonoBehaviour type) where T : MonoBehaviour
     {
-        MazeDoor mazeDoor = Instantiate(doorPrefab) as MazeDoor;
-        mazeDoor.coordinates = coordinates;
-        mazeDoor.name = "Maze Door " + coordinates.x + ", " + coordinates.z;
-        mazeDoor.transform.parent = transform;
-        mazeDoor.transform.localPosition = new Vector3(coordinates.x * 4, 0f, coordinates.z * 4);
-        return mazeDoor;
+        T mazeObject = createPrefab<T>(coordinates, type);
+        mazeObject.transform.rotation = MazeDirections.ToRotation(facing);
+        return mazeObject;
     }
 }
