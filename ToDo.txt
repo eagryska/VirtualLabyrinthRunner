@@ -1,0 +1,27 @@
+1. Create/Combine all the different sections of the maze - Evan and Dylan
+
+2. Items and their corresponding triggers/obstacles saved as prefabs to insert instead of MazeWalls. Also would need controller mappings
+    a. Bow and Arrow - Target that acts as trigger when hit
+    b. Swords - Cut away vines?
+    c. Jumping boots - Low walls to jump over
+    d. Hammer - Breakable walls
+    e. Pushing Tool (needs name) - Push a block to get past the obstacle
+
+3. Integrate triggers/obstacles into maze creation algorithm
+
+4. Upgrade Store + controller mappings
+    a. Interface
+    b. Player Progression upgrades
+        - Double Jump
+        - Run Faster
+        - Any more?
+    c. Collectable Coins throughout the maze to purchase upgrades
+    d. Shopkeeper to talk to to open store
+
+5. Map to show user's position at certain checkpoints (+ controller mappings)
+
+6. Pause Menu/Tutorial (+ controller mappings) - Evan and Dylan
+
+7. Starting Room before you enter the maze
+
+8. Winning the game scenario (getting through last section of the maze)
