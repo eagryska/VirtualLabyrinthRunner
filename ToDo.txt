@@ -22,6 +22,6 @@
 
 6. Pause Menu/Tutorial (+ controller mappings) - Evan and Dylan
 
-7. Starting Room before you enter the maze
+7. Starting Room before you enter the maze - Evan and Dylan
 
 8. Winning the game scenario (getting through last section of the maze)
