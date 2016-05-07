@@ -13,12 +13,11 @@ public enum WallType
     PermanentBlank,
     SolidWall,
     PermanentWall,
+    Floor,
     LootRoom,
     Door,
     TreasureChest
 }
-
-
 
 public static class MazeDirections {
 

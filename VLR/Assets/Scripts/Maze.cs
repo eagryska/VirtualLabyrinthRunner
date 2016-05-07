@@ -9,15 +9,29 @@ public class Maze : MonoBehaviour
 
     public MazeWall wallPrefab;
     public MazeDoor doorPrefab;
+    public MazeFloor floorPrefab;
     public TreasureChest treasurePrefab;
 
     private WallType[,] mazeData;
 
+    private IntVector2 mazePos;
     private IntVector2 size;
     private IntVector2 start;
     private IntVector2 doorEntrance;
     private IntVector2 door;
     private MazeDirection dir;
+
+    //0 - floor
+    //1 - loot floor
+    //2 - walls
+    //3 - breakable wall
+    //4 - broken wall
+    public Material[] materials;
+
+    public void setPosition(IntVector2 pos)
+    {
+        mazePos = pos;
+    }
 
     public WallType GetType(IntVector2 coordinates)
     {
@@ -45,11 +59,27 @@ public class Maze : MonoBehaviour
         doorPrefab.name = "Maze Door";
         treasurePrefab.name = "Treasure Chest";
 
+        initMazePrefabs();
         initMazeData();
         createMazeData();
         addDoor();
         populateMaze();
-        
+    }
+
+    private void initMazePrefabs()
+    {
+        foreach (Renderer r in wallPrefab.GetComponentsInChildren<Renderer>())
+        {
+            r.material = materials[2];
+        }
+        foreach (Renderer r in floorPrefab.GetComponentsInChildren<Renderer>())
+        {
+            r.material = materials[0];
+        }
+        foreach (Renderer r in doorPrefab.GetComponentsInChildren<Renderer>())
+        {
+            r.material = materials[2];
+        }
     }
 
     private void initMazeData()
@@ -63,7 +93,7 @@ public class Maze : MonoBehaviour
             }
         }
         //set start
-        SetType(start, WallType.Blank);
+        SetType(start, WallType.Floor);
         //loot room at the center of maze
         for (int x = mazeSize.x - 2; x <= mazeSize.x + 2; x++)
         {
@@ -139,27 +169,27 @@ public class Maze : MonoBehaviour
                 int move = Random.Range(0, possibleDirections.Count);
                 if (possibleDirections[move] == MazeDirection.South)
                 {
-                    SetType(position.x, position.z - 1, WallType.Blank);
+                    SetType(position.x, position.z - 1, WallType.Floor);
                     position.z -= 2;
-                    SetType(position, WallType.Blank);
+                    SetType(position, WallType.Floor);
                 }
                 else if (possibleDirections[move] == MazeDirection.North)
                 {
-                    SetType(position.x, position.z + 1, WallType.Blank);
+                    SetType(position.x, position.z + 1, WallType.Floor);
                     position.z += 2;
-                    SetType(position, WallType.Blank);
+                    SetType(position, WallType.Floor);
                 }
                 else if (possibleDirections[move] == MazeDirection.West)
                 {
-                    SetType(position.x - 1, position.z, WallType.Blank);
+                    SetType(position.x - 1, position.z, WallType.Floor);
                     position.x -= 2;
-                    SetType(position, WallType.Blank);
+                    SetType(position, WallType.Floor);
                 }
                 else
                 {
-                    SetType(position.x + 1, position.z, WallType.Blank);
+                    SetType(position.x + 1, position.z, WallType.Floor);
                     position.x += 2;
-                    SetType(position, WallType.Blank);
+                    SetType(position, WallType.Floor);
                 }
                 possibleDirections.Clear();
                 moves.Push(position);
@@ -175,30 +205,40 @@ public class Maze : MonoBehaviour
     private void addDoor()
     {
         SetType(door, WallType.Door);
-        SetType(doorEntrance, WallType.Blank);
+        SetType(doorEntrance, WallType.Floor);
     }
 
     private void populateMaze()
     {
-        SetType(0, 1, WallType.Blank);
+        SetType(0, 1, WallType.Floor);
         IntVector2 pos = new IntVector2(0, 0);
         for (; pos.x < size.x; pos.x++)
         {
             pos.z = 0;
             for (; pos.z < size.z; pos.z++)
             {
-
-                if (GetType(pos) == WallType.SolidWall || GetType(pos) == WallType.PermanentWall)
+                WallType type = GetType(pos);
+                if (type == WallType.SolidWall || type == WallType.PermanentWall)
                 {
                     createPrefab<MazeWall>(pos, dir, wallPrefab);
                 }
-                if (GetType(pos) == WallType.Door)
+                if (type == WallType.Door)
                 {
                     createPrefab<MazeDoor>(pos, dir, doorPrefab);
+                    createPrefabMaterial<MazeFloor>(pos, floorPrefab, 1);
                 }
-                if (GetType(pos) == WallType.TreasureChest)
+                if (type == WallType.TreasureChest)
                 {
                     createPrefab<TreasureChest>(pos, dir, treasurePrefab);
+                    createPrefabMaterial<MazeFloor>(pos, floorPrefab, 1);
+                }
+                if(type == WallType.LootRoom)
+                {
+                    createPrefabMaterial<MazeFloor>(pos, floorPrefab, 1);
+                }
+                if (type == WallType.Floor)
+                {
+                    createPrefab<MazeFloor>(pos, dir, floorPrefab);
                 }
             }
         }
@@ -209,14 +249,21 @@ public class Maze : MonoBehaviour
         T mazeObject = Instantiate(type) as T;
         (mazeObject).name = type.name + " " + coordinates.x + ", " + coordinates.z;
         mazeObject.transform.parent = transform;
-        mazeObject.transform.localPosition = new Vector3(coordinates.x * 4, 0f, coordinates.z * 4);
+        mazeObject.transform.localPosition = new Vector3(coordinates.x * 4 + mazePos.x, 0f, coordinates.z * 4 + mazePos.z);
         return mazeObject;
     }
 
     private T createPrefab<T>(IntVector2 coordinates, MazeDirection facing, MonoBehaviour type) where T : MonoBehaviour
     {
         T mazeObject = createPrefab<T>(coordinates, type);
-        mazeObject.transform.rotation = MazeDirections.ToRotation(facing);
+        mazeObject.transform.Rotate(MazeDirections.ToRotation(facing).eulerAngles);
+        return mazeObject;
+    }
+
+    private T createPrefabMaterial<T>(IntVector2 coordinates, MonoBehaviour type, int materialIndex) where T : MonoBehaviour
+    {
+        T mazeObject = createPrefab<T>(coordinates, type);
+        mazeObject.GetComponentInChildren<Renderer>().material = materials[materialIndex];
         return mazeObject;
     }
 }
