@@ -1,9 +1,9 @@
 1. Create/Combine all the different sections of the maze - Evan and Dylan
 
 2. Items and their corresponding triggers/obstacles saved as prefabs to insert instead of MazeWalls. Also would need controller mappings
-    a. Bow and Arrow - Target that acts as trigger when hit
-    b. Swords - Cut away vines?
-    c. Jumping boots - Low walls to jump over
+    a. Bow and Arrow - Target that acts as trigger when hit  - Jihui
+    b. Swords - Cut away vines?       - Jihui
+    c. Jumping boots - Low walls to jump over    - Jihui
     d. Hammer - Breakable walls - Evan and Dylan
     e. Pushing Tool (needs name) - Push a block to get past the obstacle
 
@@ -15,10 +15,10 @@
         - Double Jump
         - Run Faster
         - Any more?
-    c. Collectable Coins throughout the maze to purchase upgrades
+    c. Collectable Coins throughout the maze to purchase upgrades - Jihui
     d. Shopkeeper to talk to to open store
 
-5. Map to show user's position at certain checkpoints (+ controller mappings)
+5. Map to show user's position at certain checkpoints (+ controller mappings) - Jihui
 
 6. Pause Menu/Tutorial (+ controller mappings) - Evan and Dylan
 
