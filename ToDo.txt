@@ -4,7 +4,7 @@
     a. Bow and Arrow - Target that acts as trigger when hit
     b. Swords - Cut away vines?
     c. Jumping boots - Low walls to jump over
-    d. Hammer - Breakable walls
+    d. Hammer - Breakable walls - Evan and Dylan
     e. Pushing Tool (needs name) - Push a block to get past the obstacle
 
 3. Integrate triggers/obstacles into maze creation algorithm
