@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour {
     public Maze mazeMetal;
     public Maze mazeTron;
 
+    public IntVector2 mazePos1;
+    public IntVector2 mazePos2;
+    public IntVector2 mazePos3;
+    public IntVector2 mazePos4;
+
     private Maze mazeInstanceBrick1;
     private Maze mazeInstanceBrick2;
     private Maze mazeInstanceMetal;
@@ -27,19 +32,19 @@ public class GameManager : MonoBehaviour {
 
 	private void BeginGame () {
         mazeInstanceBrick1 = Instantiate(mazeBrick1) as Maze;
-        mazeInstanceBrick1.setPosition(new IntVector2(20, 20));
+        mazeInstanceBrick1.setPosition(mazePos1);
         mazeInstanceBrick1.Generate();
 
         mazeInstanceBrick2 = Instantiate(mazeBrick2) as Maze;
-        mazeInstanceBrick2.setPosition(new IntVector2(20, -70));
+        mazeInstanceBrick2.setPosition(mazePos2);
         mazeInstanceBrick2.Generate();
 
         mazeInstanceMetal = Instantiate(mazeMetal) as Maze;
-        mazeInstanceMetal.setPosition(new IntVector2(-70, 20));
+        mazeInstanceMetal.setPosition(mazePos3);
         mazeInstanceMetal.Generate();
 
         mazeInstanceTron = Instantiate(mazeTron) as Maze;
-        mazeInstanceTron.setPosition(new IntVector2(-70, -100));
+        mazeInstanceTron.setPosition(mazePos4);
         mazeInstanceTron.Generate();
     }
 

@@ -4,6 +4,14 @@ public class TreasureChest : MonoBehaviour {
 
 	public IntVector2 coordinates;
     public int counter;
+    public MonoBehaviour[] possibleContents;
+
+    private int contentIndex;
+
+    public void setContentIndex(int newIndex)
+    {
+        contentIndex = newIndex;
+    }
 
     // Use this for initialization
     void Start()

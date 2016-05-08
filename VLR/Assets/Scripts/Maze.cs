@@ -6,10 +6,12 @@ public class Maze : MonoBehaviour
 {
 
     public IntVector2 mazeSize;
+    public bool hasCeiling;
 
     public MazeWall wallPrefab;
     public MazeDoor doorPrefab;
     public MazeFloor floorPrefab;
+    public MazeCeiling ceilingPrefab;
     public TreasureChest treasurePrefab;
 
     private WallType[,] mazeData;
@@ -231,14 +233,20 @@ public class Maze : MonoBehaviour
                 {
                     createPrefab<TreasureChest>(pos, dir, treasurePrefab);
                     createPrefabMaterial<MazeFloor>(pos, floorPrefab, 1);
+                    if (hasCeiling)
+                        createPrefab<MazeCeiling>(pos, ceilingPrefab);
                 }
                 if(type == WallType.LootRoom)
                 {
                     createPrefabMaterial<MazeFloor>(pos, floorPrefab, 1);
+                    if (hasCeiling)
+                        createPrefab<MazeCeiling>(pos, ceilingPrefab);
                 }
                 if (type == WallType.Floor)
                 {
                     createPrefab<MazeFloor>(pos, dir, floorPrefab);
+                    if(hasCeiling)
+                        createPrefab<MazeCeiling>(pos, ceilingPrefab);
                 }
             }
         }
@@ -249,7 +257,7 @@ public class Maze : MonoBehaviour
         T mazeObject = Instantiate(type) as T;
         (mazeObject).name = type.name + " " + coordinates.x + ", " + coordinates.z;
         mazeObject.transform.parent = transform;
-        mazeObject.transform.localPosition = new Vector3(coordinates.x * 4 + mazePos.x, 0f, coordinates.z * 4 + mazePos.z);
+        mazeObject.transform.localPosition = new Vector3(coordinates.x * 4 + mazePos.x, -.2f, coordinates.z * 4 + mazePos.z);
         return mazeObject;
     }
 
