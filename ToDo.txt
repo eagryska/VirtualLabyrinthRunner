@@ -10,18 +10,18 @@
 3. Integrate triggers/obstacles into maze creation algorithm
 
 4. Upgrade Store + controller mappings
-    a. Interface
+    a. Interface/Menu - Evan and Dylan
     b. Player Progression upgrades
         - Double Jump
         - Run Faster
+        - Brighter Torch
         - Any more?
     c. Collectable Coins throughout the maze to purchase upgrades - Jihui
-    d. Shopkeeper to talk to to open store
+    d. Shopkeeper to talk to to open store - Evan and Dylan
+    e. Shop locations - Evan and Dylan
 
 5. Map to show user's position at certain checkpoints (+ controller mappings) - Jihui
 
-6. Pause Menu/Tutorial (+ controller mappings) - Evan and Dylan
+6. Starting Room before you enter the maze - Evan and Dylan
 
-7. Starting Room before you enter the maze - Evan and Dylan
-
-8. Winning the game scenario (getting through last section of the maze)
+7. Winning the game scenario (getting through last section of the maze) - Evan and Dylan
