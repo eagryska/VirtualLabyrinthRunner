@@ -7,6 +7,7 @@ public class TreasureChest : MonoBehaviour {
     public MonoBehaviour[] possibleContents;
 
     private int contentIndex;
+    private GameManager gm; 
 
     public void setContentIndex(int newIndex)
     {
@@ -17,6 +18,7 @@ public class TreasureChest : MonoBehaviour {
     void Start()
     {
         counter = 0;
+        gm = GameObject.FindObjectOfType<GameManager>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -29,6 +31,8 @@ public class TreasureChest : MonoBehaviour {
         {
             Debug.Log("OPEN");
             GetComponent<Animation>().Play("box_open");
+            gm = GameObject.FindObjectOfType<GameManager>();
+            gm.regenerate(transform.position.x, transform.position.z);
             counter += 1;
         }
 

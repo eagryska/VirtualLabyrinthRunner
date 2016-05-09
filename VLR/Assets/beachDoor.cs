@@ -24,15 +24,19 @@ public class beachDoor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space) && !opened)
-        {
-            opened = true;
-        }
         if(opened && DoorOpenAngle < 70)
         {
             DoorOpenAngle += Time.deltaTime * 20;
             leftDoor.transform.RotateAround(leftHinge.transform.position, Vector3.up, Time.deltaTime * -20);
             rightDoor.transform.RotateAround(rightHinge.transform.position, Vector3.up, Time.deltaTime * 20);
+        }
+    }
+
+    public void openDoor()
+    {
+        if (!opened)
+        {
+            opened = true;
         }
     }
 }

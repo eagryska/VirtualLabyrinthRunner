@@ -19,9 +19,12 @@ public class Maze : MonoBehaviour
     private IntVector2 mazePos;
     private IntVector2 size;
     private IntVector2 start;
+    private IntVector2 end;
     private IntVector2 doorEntrance;
     private IntVector2 door;
     private MazeDirection dir;
+    private bool regenerating;
+    private int mazeNum;
 
     //0 - floor
     //1 - loot floor
@@ -50,9 +53,20 @@ public class Maze : MonoBehaviour
         mazeData[x, z] = type;
     }
 
-    public void Generate()
+    public void SetStartPoint(int x, int z)
     {
-        start = new IntVector2(1, 1);
+        start = new IntVector2(x, z);
+    }
+
+    public void SetEndPoint(int x, int z)
+    {
+        end = new IntVector2(x, z);
+    }
+
+    public void Generate(bool regenerating, int mazeNum)
+    {
+        this.regenerating = regenerating;
+        this.mazeNum = mazeNum;
         size = new IntVector2(mazeSize.x * 2 + 1, mazeSize.z * 2 + 1);
         door = mazeSize.clone();
         doorEntrance = mazeSize.clone();
@@ -94,8 +108,11 @@ public class Maze : MonoBehaviour
                 SetType(x, z, WallType.SolidWall);
             }
         }
-        //set start
-        SetType(start, WallType.Floor);
+        //set start and end
+        if(regenerating)
+            SetType(end, WallType.Floor);
+        else
+            SetType(start, WallType.Floor);
         //loot room at the center of maze
         for (int x = mazeSize.x - 2; x <= mazeSize.x + 2; x++)
         {
@@ -135,12 +152,15 @@ public class Maze : MonoBehaviour
             doorEntrance.x += 3;
         }
         //add Treasure Chest
-        SetType(mazeSize, WallType.TreasureChest);
+        if(!regenerating)
+            SetType(mazeSize, WallType.TreasureChest);
     }
 
     private void createMazeData()
     {
-        IntVector2 position = start.clone();
+        //IntVector2 position = start.clone();
+        IntVector2 position = new IntVector2(1, 1);
+        SetType(position, WallType.Floor);
         Stack<IntVector2> moves = new Stack<IntVector2>();
         moves.Push(position);
         List<MazeDirection> possibleDirections = new List<MazeDirection>();
@@ -212,7 +232,7 @@ public class Maze : MonoBehaviour
 
     private void populateMaze()
     {
-        SetType(0, 1, WallType.Floor);
+        //SetType(0, 1, WallType.Floor);
         IntVector2 pos = new IntVector2(0, 0);
         for (; pos.x < size.x; pos.x++)
         {

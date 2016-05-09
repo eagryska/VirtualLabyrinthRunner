@@ -33,19 +33,27 @@ public class GameManager : MonoBehaviour {
 	private void BeginGame () {
         mazeInstanceBrick1 = Instantiate(mazeBrick1) as Maze;
         mazeInstanceBrick1.setPosition(mazePos1);
-        mazeInstanceBrick1.Generate();
+        mazeInstanceBrick1.SetStartPoint(0, 1);
+        mazeInstanceBrick1.SetEndPoint(20, 19);
+        mazeInstanceBrick1.Generate(false, 1);
 
         mazeInstanceBrick2 = Instantiate(mazeBrick2) as Maze;
         mazeInstanceBrick2.setPosition(mazePos2);
-        mazeInstanceBrick2.Generate();
+        mazeInstanceBrick2.SetStartPoint(0, 19);
+        mazeInstanceBrick2.SetEndPoint(19, 0);
+        mazeInstanceBrick2.Generate(false, 2);
 
         mazeInstanceMetal = Instantiate(mazeMetal) as Maze;
         mazeInstanceMetal.setPosition(mazePos3);
-        mazeInstanceMetal.Generate();
+        mazeInstanceMetal.SetStartPoint(19, 20);
+        mazeInstanceMetal.SetEndPoint(0, 1);
+        mazeInstanceMetal.Generate(false, 3);
 
         mazeInstanceTron = Instantiate(mazeTron) as Maze;
         mazeInstanceTron.setPosition(mazePos4);
-        mazeInstanceTron.Generate();
+        mazeInstanceTron.SetStartPoint(20, 1);
+        mazeInstanceTron.SetEndPoint(1, 20);
+        mazeInstanceTron.Generate(false, 4);
     }
 
 	private void RestartGame () {
@@ -55,4 +63,41 @@ public class GameManager : MonoBehaviour {
         Destroy(mazeInstanceTron.gameObject);
         BeginGame();
 	}
+
+    public void regenerate(float x, float z)
+    {
+        if(x == 112 && z == -97)
+        {
+            Destroy(mazeInstanceBrick1.gameObject);
+            mazeInstanceBrick1 = Instantiate(mazeBrick1) as Maze;
+            mazeInstanceBrick1.setPosition(mazePos1);
+            mazeInstanceBrick1.SetStartPoint(0, 1);
+            mazeInstanceBrick1.SetEndPoint(20, 19);
+            mazeInstanceBrick1.Generate(true, 1);
+        }
+        else if(x == 236 && z == -97)
+        {
+            mazeInstanceBrick2 = Instantiate(mazeBrick2) as Maze;
+            mazeInstanceBrick2.setPosition(mazePos2);
+            mazeInstanceBrick2.SetStartPoint(0, 19);
+            mazeInstanceBrick2.SetEndPoint(19, 0);
+            mazeInstanceBrick2.Generate(true, 2);
+        }
+        else if(x == 236 && z == -217)
+        {
+            mazeInstanceMetal = Instantiate(mazeMetal) as Maze;
+            mazeInstanceMetal.setPosition(mazePos3);
+            mazeInstanceMetal.SetStartPoint(19, 20);
+            mazeInstanceMetal.SetEndPoint(0, 1);
+            mazeInstanceMetal.Generate(true, 3);
+        }
+        else
+        {
+            mazeInstanceTron = Instantiate(mazeTron) as Maze;
+            mazeInstanceTron.setPosition(mazePos4);
+            mazeInstanceTron.SetStartPoint(20, 1);
+            mazeInstanceTron.SetEndPoint(1, 20);
+            mazeInstanceTron.Generate(true, 4);
+        }
+    }
 }
