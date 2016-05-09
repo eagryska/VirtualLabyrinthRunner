@@ -21,7 +21,7 @@ public class switchWeapon : MonoBehaviour
             foreach (Transform child in transform)
             {
                 //Debug.Log(child.tag);
-                if(child.tag == "item")
+                if(child.tag == "inventory")
                 {
                     if(child.name == current)
                     {
