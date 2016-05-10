@@ -6,6 +6,7 @@ public class switchWeapon : MonoBehaviour
     public GameObject defaultSwing;
     public GameObject mydefault;
     public GameObject player;
+    public GameObject defaultPotionSwing;
     private GameObject myitem;
     private int counter;
     private string current;
@@ -29,7 +30,7 @@ public class switchWeapon : MonoBehaviour
             foreach (Transform child in transform)
             {
                 //Debug.Log(child.tag);
-                if(child.tag == "inventory" || child.tag == "inventory_swing")
+                if(child.tag == "inventory" || child.tag == "inventory_swing" || child.tag == "inventory_potion")
                 {
                     if(child.name == current)
                     {
@@ -52,7 +53,11 @@ public class switchWeapon : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             myitem = GameObject.Find(swing);
-            if(myitem.tag == "inventory_swing")
+            if (myitem.tag == "inventory_potion")
+            {
+                flag = 3;
+            }
+            else if (myitem.tag == "inventory_swing")
                 flag = 1;
             else
             {
@@ -72,6 +77,27 @@ public class switchWeapon : MonoBehaviour
         {
             myitem.transform.position = Vector3.Lerp(myitem.transform.position, mydefault.gameObject.transform.position, 10 * Time.deltaTime);
             myitem.transform.rotation = Quaternion.Lerp(myitem.transform.rotation, mydefault.gameObject.transform.rotation, 10 * Time.deltaTime);
+        }
+        if(flag == 3)
+        {
+            myitem.transform.position = Vector3.Lerp(myitem.transform.position, defaultPotionSwing.gameObject.transform.position, 10 * Time.deltaTime);
+            myitem.transform.rotation = Quaternion.Lerp(myitem.transform.rotation, defaultPotionSwing.gameObject.transform.rotation, 10 * Time.deltaTime);
+            if (myitem.transform.position == defaultPotionSwing.gameObject.transform.position)
+            {
+                Destroy(myitem.transform.gameObject);
+                counter = 0;
+                foreach (Transform child in transform)
+                {
+                    if (child.tag == "inventory" || child.tag == "inventory_swing")
+                    {
+                        counter += 1;
+                        swing = counter.ToString();
+                        child.name = swing;
+                        current = counter.ToString();
+                    }
+                }
+                flag = 0;
+            }
         }
     }
 }
