@@ -52,9 +52,9 @@ public class ReCalcCubeTexture : MonoBehaviour
 
     private Vector2[] SetupUvMap(Vector2[] meshUVs)
     {
-        var width = _currentScale.x;
-        var depth = _currentScale.z;
-        var height = _currentScale.y;
+        var width = _currentScale.x/4;
+        var depth = _currentScale.z/4;
+        var height = _currentScale.y/4;
 
         //Front
         meshUVs[2] = new Vector2(0, height);
