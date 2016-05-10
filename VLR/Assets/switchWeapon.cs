@@ -29,7 +29,7 @@ public class switchWeapon : MonoBehaviour
             foreach (Transform child in transform)
             {
                 //Debug.Log(child.tag);
-                if(child.tag == "inventory" || child.tag == "item_swing")
+                if(child.tag == "inventory" || child.tag == "inventory_swing")
                 {
                     if(child.name == current)
                     {
@@ -52,7 +52,7 @@ public class switchWeapon : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             myitem = GameObject.Find(swing);
-            if(myitem.tag == "item_swing")
+            if(myitem.tag == "inventory_swing")
                 flag = 1;
             else
             {

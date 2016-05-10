@@ -46,19 +46,19 @@ public class pickup : MonoBehaviour {
                     {
                         hit.collider.gameObject.transform.position = defaultHammer.gameObject.transform.position;
                         hit.collider.gameObject.transform.rotation = defaultHammer.gameObject.transform.rotation;
-                        hit.collider.gameObject.tag = "inventory";
+                        hit.collider.gameObject.tag = "inventory_swing";
                     }
                     else 
                     {
                         hit.collider.gameObject.transform.position = mydefault.gameObject.transform.position;
                         hit.collider.gameObject.transform.rotation = mydefault.gameObject.transform.rotation;
-                        hit.collider.gameObject.tag = "inventory";
+                        hit.collider.gameObject.tag = "inventory_swing";
                     }
                     hit.collider.gameObject.active = false;
                     foreach (Transform child in transform)
                     {
                         //Debug.Log(child.tag);
-                        if (child.tag == "inventory" || child.tag == "item_swing")
+                        if (child.tag == "inventory" || child.tag == "inventory_swing")
                         {
                             child.name = counter.ToString();
                             counter += 1;
@@ -68,5 +68,6 @@ public class pickup : MonoBehaviour {
             }
 
         }
+        counter = 1;
     }
 }
