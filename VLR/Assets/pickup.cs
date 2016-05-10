@@ -28,7 +28,7 @@ public class pickup : MonoBehaviour {
 
             if(Physics.Raycast(ray, out hit, distance))
             {
-                if(hit.collider.gameObject.tag == "item")
+                if(hit.collider.gameObject.tag == "item" || hit.collider.gameObject.tag == "item_swing")
                 {
                     Debug.Log("picked");
                     hit.collider.gameObject.transform.parent = this.transform;
@@ -58,7 +58,7 @@ public class pickup : MonoBehaviour {
                     foreach (Transform child in transform)
                     {
                         //Debug.Log(child.tag);
-                        if (child.tag == "inventory")
+                        if (child.tag == "inventory" || child.tag == "item_swing")
                         {
                             child.name = counter.ToString();
                             counter += 1;

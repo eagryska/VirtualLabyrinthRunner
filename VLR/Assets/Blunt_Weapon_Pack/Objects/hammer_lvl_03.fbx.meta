@@ -3,6 +3,10 @@ guid: c96167e5e7640ba47a3705361012406c
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: cudgel_lvl_01
     4300002: mace_lvl_01
     4300004: cudgel_lvl_02_001
@@ -11,6 +15,7 @@ ModelImporter:
     4300010: hammer_lvl_03
     4300012: hammer_lvl_02
     4300014: hammer_lvl_01
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

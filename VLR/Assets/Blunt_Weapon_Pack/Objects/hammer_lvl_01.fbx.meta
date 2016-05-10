@@ -3,10 +3,15 @@ guid: 36efc98a1fc61ec4c9b2dc98b94ca611
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: cudgel_lvl_01
     4300002: mace_lvl_01
     4300004: battle_hammer_lvl_01
     4300006: hammer_lvl_01
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
