@@ -3,8 +3,8 @@ using System.Collections;
 
 public class sword : MonoBehaviour
 {
-    public GameObject defaultSwing;
-    public GameObject mydefault;
+    private GameObject defaultSwing;
+    private GameObject mydefault;
 
     private int numHits;
 
@@ -15,11 +15,18 @@ public class sword : MonoBehaviour
     {
         swungState = 0;
         numHits = 0;
+        defaultSwing = GameObject.Find("OVRPlayerVLR/defaultSwing");
+        mydefault = GameObject.Find("OVRPlayerVLR/default");
     }
 
     // Update is called once per frame
     void Update()
-    {
+    { 
+        if(defaultSwing == null)
+        {
+            Debug.Log("null");
+            return;
+        }
         if (Input.GetMouseButtonDown(0) && tag == "inventory")
         {
             cutVines();

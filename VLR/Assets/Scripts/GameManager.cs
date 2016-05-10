@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviour {
             mazeInstanceBrick2.SetStartPoint(0, 19);
             mazeInstanceBrick2.SetEndPoint(19, 0);
             mazeInstanceBrick2.Generate(false, 2);
+
+            //spawn reward: hammer
         }
         else if(x == 236 && z == -97)
         {
@@ -103,6 +105,8 @@ public class GameManager : MonoBehaviour {
             mazeInstanceMetal.SetStartPoint(19, 20);
             mazeInstanceMetal.SetEndPoint(0, 1);
             mazeInstanceMetal.Generate(false, 3);
+
+            //spawn reward: double jump
         }
         else if(x == 236 && z == -217)
         {
@@ -122,6 +126,8 @@ public class GameManager : MonoBehaviour {
             mazeInstanceTron.SetStartPoint(20, 1);
             mazeInstanceTron.SetEndPoint(1, 20);
             mazeInstanceTron.Generate(false, 4);
+
+            //spawn reward: bow and arrow
         }
         else
         {
@@ -134,6 +140,8 @@ public class GameManager : MonoBehaviour {
             mazeInstanceTron.SetStartPoint(20, 1);
             mazeInstanceTron.SetEndPoint(1, 20);
             mazeInstanceTron.Generate(true, 4);
+
+            //spawn reward: ??
         }
     }
 }

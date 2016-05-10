@@ -276,7 +276,10 @@ public class Maze : MonoBehaviour
     {
         T mazeObject = Instantiate(type) as T;
         (mazeObject).name = type.name + " " + coordinates.x + ", " + coordinates.z;
-        mazeObject.transform.parent = transform;
+        if (!(mazeObject is TreasureChest))
+        {
+            mazeObject.transform.parent = transform;
+        }
         mazeObject.transform.localPosition = new Vector3(coordinates.x * 4 + mazePos.x, -.195f, coordinates.z * 4 + mazePos.z);
         return mazeObject;
     }

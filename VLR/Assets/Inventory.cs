@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour {
     public GameObject defaultBow;
     public GameObject defaultTorch;
     public GameObject defaultHammer;
+    public GameObject defaultGun;
 
 
     ArrayList inventory = new ArrayList();
@@ -54,6 +55,11 @@ public class Inventory : MonoBehaviour {
                     {
                         hit.collider.gameObject.transform.position = defaultHammer.gameObject.transform.position;
                         hit.collider.gameObject.transform.rotation = defaultHammer.gameObject.transform.rotation;
+                    }
+                    else if (hit.collider.gameObject.name.Contains("gun"))
+                    {
+                        hit.collider.gameObject.transform.position = defaultGun.gameObject.transform.position;
+                        hit.collider.gameObject.transform.rotation = defaultGun.gameObject.transform.rotation;
                     }
                     else
                     {
