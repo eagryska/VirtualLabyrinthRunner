@@ -2,25 +2,25 @@
 
 2. Items and their corresponding triggers/obstacles saved as prefabs to insert instead of MazeWalls. Also would need controller mappings
     a. Bow and Arrow - Target that acts as trigger when hit  - Jihui
-    b. Swords - Cut away vines?       - Jihui
-    c. Jumping boots - Low walls to jump over    - Jihui
+    b. Swords - Cut away vines?       - Jihui 
+    c. Jumping boots - Low walls to jump over    - Shitiz
     d. Hammer - Breakable walls - Evan and Dylan
-    e. Pushing Tool (needs name) - Push a block to get past the obstacle
+    e. muscular potion - Push a block to get past the obstacle - Jihui 
 
 3. Integrate triggers/obstacles into maze creation algorithm
 
 4. Upgrade Store + controller mappings
     a. Interface/Menu - Evan and Dylan
-    b. Player Progression upgrades
+    b. Player Progression upgrades   - Shitiz
         - Double Jump
         - Run Faster
         - Brighter Torch
         - Any more?
-    c. Collectable Coins throughout the maze to purchase upgrades - Jihui
+    c. Collectable Coins throughout the maze to purchase upgrades - Jihui 
     d. Shopkeeper to talk to to open store - Evan and Dylan
     e. Shop locations - Evan and Dylan
 
-5. Map to show user's position at certain checkpoints (+ controller mappings) - Jihui
+5. Map to show user's position at certain checkpoints (+ controller mappings) - ???How
 
 6. Starting Room before you enter the maze - Evan and Dylan
 

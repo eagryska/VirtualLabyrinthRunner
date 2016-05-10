@@ -19,7 +19,7 @@ public class cutVine : MonoBehaviour {
         }
         RaycastHit hit;
         Ray landingRay = new Ray(this.transform.position, transform.up);
-        Debug.DrawLine(this.transform.position, transform.up, Color.red);
+        //Debug.DrawLine(this.transform.position, transform.up, Color.red);
         line.SetPosition(0, landingRay.origin);
         if (Physics.Raycast(landingRay, out hit, 2))
         {
