@@ -8,6 +8,8 @@ public class sword : MonoBehaviour
     private GameObject defaultSwing;
     private GameObject mydefault;
 
+    private GameObject centerEye;
+
     private int numHits;
 
     private int swungState;
@@ -19,6 +21,7 @@ public class sword : MonoBehaviour
         numHits = 0;
         defaultSwing = GameObject.Find("OVRPlayerVLR/defaultSwing");
         mydefault = GameObject.Find("OVRPlayerVLR/default");
+        centerEye = GameObject.Find("OVRPlayerVLR/OVRCameraRig/TrackingSpace/CenterEyeAnchor");
     }
 
     // Update is called once per frame
@@ -29,7 +32,7 @@ public class sword : MonoBehaviour
             Debug.Log("null");
             return;
         }
-        if (Input.GetMouseButtonDown(0) && tag == "inventory")
+        if ((Input.GetMouseButtonDown(0) || Input.GetAxis("Oculus_GearVR_RIndexTrigger") > 0.3f) && tag == "inventory")
         {
             cutVines();
             swungState = 1;
@@ -57,7 +60,8 @@ public class sword : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, 5))
+        //if (Physics.Raycast(ray, out hit, 5))
+        if (Physics.Raycast(centerEye.transform.position, centerEye.transform.forward, out hit, 5))
         {
             if (hit.collider.gameObject.tag == "vine")
             {

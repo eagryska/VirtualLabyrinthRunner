@@ -221,12 +221,12 @@ public class OVRPlayerController : MonoBehaviour
 		if (HaltUpdateMovement)
 			return;
 
-		bool moveForward = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
-		bool moveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
-		bool moveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
-		bool moveBack = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+		bool moveForward = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxis("Oculus_GearVR_LThumbstickY") > 0.1f || Input.GetAxis("Oculus_GearVR_DpadY") < -0.1f;
+		bool moveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Oculus_GearVR_LThumbstickX") < -0.1f || Input.GetAxis("Oculus_GearVR_DpadX") < -0.1f;
+        bool moveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Oculus_GearVR_LThumbstickX") > 0.1f || Input.GetAxis("Oculus_GearVR_DpadX") > 0.1f;
+        bool moveBack = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetAxis("Oculus_GearVR_LThumbstickY") < -0.1f || Input.GetAxis("Oculus_GearVR_DpadY") > 0.1f;
 
-		bool dpad_move = false;
+        bool dpad_move = false;
 
 		if (OVRInput.Get(OVRInput.Button.DpadUp))
 		{
@@ -257,8 +257,9 @@ public class OVRPlayerController : MonoBehaviour
 		float moveInfluence = Acceleration * 0.1f * MoveScale * MoveScaleMultiplier;
 
 		// Run!
-		if (dpad_move || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-			moveInfluence *= 2.0f;
+		if (dpad_move || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) || Input.GetAxis("Oculus_GearVR_LIndexTrigger") > 0.1f || Input.GetButton("LS_Button"))
+
+            moveInfluence *= 2.0f;
 
 		Quaternion ort = transform.rotation;
 		Vector3 ortEuler = ort.eulerAngles;
@@ -291,10 +292,10 @@ public class OVRPlayerController : MonoBehaviour
 		prevHatRight = curHatRight;
 
 		//Use keys to ratchet rotation
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LB_Button"))
 			euler.y -= RotationRatchet;
 
-		if (Input.GetKeyDown(KeyCode.E))
+		if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("RB_Button"))
 			euler.y += RotationRatchet;
 
 		float rotateInfluence = SimulationRate * Time.deltaTime * RotationAmount * RotationScaleMultiplier;

@@ -35,7 +35,7 @@ public class conversation : MonoBehaviour {
 	void Update () {
         if (!exhausted)
         {
-            if (talking && Input.GetKeyDown(KeyCode.F))
+            if (talking && (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("B_Button")))
             {
                 curLine = (curLine + 1);
                 if(curLine == lines.Length)
@@ -59,7 +59,7 @@ public class conversation : MonoBehaviour {
             }
         }
         if(exhausted){
-            if (talking && Input.GetKeyDown(KeyCode.F))
+            if (talking && (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("B_Button")))
             {
                 curLine = (curLine + 1) % exhaustedLines.Length;
             }

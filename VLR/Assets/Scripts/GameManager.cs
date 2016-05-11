@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
     public Maze mazeTron;
 
     public hammer hammerPrefab;
+    public potion potionPrefab;
+    public boots bootsPrefab;
 
     public IntVector2 mazePos1;
     public IntVector2 mazePos2;
@@ -26,7 +28,6 @@ public class GameManager : MonoBehaviour {
     private GameObject mazeEntranceArea;
 
     private void Start () {
-		BeginGame();
         tunnel = GameObject.Find("Tunnel");
         beachStore = GameObject.Find("BeachStore");
         brickMetalTransition = GameObject.Find("BrickMetalTransition");
@@ -46,31 +47,29 @@ public class GameManager : MonoBehaviour {
 
     private void genRest()
     {
+        mazeInstanceBrick1 = Instantiate(mazeBrick1) as Maze;
+        mazeInstanceBrick1.setPosition(mazePos1);
+        mazeInstanceBrick1.SetStartPoint(0, 1);
+        mazeInstanceBrick1.SetEndPoint(20, 19);
+        mazeInstanceBrick1.Generate(false, 8);
+
         mazeInstanceBrick2 = Instantiate(mazeBrick2) as Maze;
         mazeInstanceBrick2.setPosition(mazePos2);
         mazeInstanceBrick2.SetStartPoint(0, 19);
         mazeInstanceBrick2.SetEndPoint(19, 0);
-        mazeInstanceBrick2.Generate(false, 2);
+        mazeInstanceBrick2.Generate(false, 8);
 
         mazeInstanceMetal = Instantiate(mazeMetal) as Maze;
         mazeInstanceMetal.setPosition(mazePos3);
         mazeInstanceMetal.SetStartPoint(19, 20);
         mazeInstanceMetal.SetEndPoint(0, 1);
-        mazeInstanceMetal.Generate(true, 3);
+        mazeInstanceMetal.Generate(true, 8);
 
         mazeInstanceTron = Instantiate(mazeTron) as Maze;
         mazeInstanceTron.setPosition(mazePos4);
         mazeInstanceTron.SetStartPoint(20, 1);
         mazeInstanceTron.SetEndPoint(1, 20);
-        mazeInstanceTron.Generate(false, 4);
-    }
-
-	private void BeginGame () {
-        mazeInstanceBrick1 = Instantiate(mazeBrick1) as Maze;
-        mazeInstanceBrick1.setPosition(mazePos1);
-        mazeInstanceBrick1.SetStartPoint(0, 1);
-        mazeInstanceBrick1.SetEndPoint(20, 19);
-        mazeInstanceBrick1.Generate(false, 1);
+        mazeInstanceTron.Generate(false, 8);
     }
 
 	private void RestartGame () {
@@ -95,7 +94,7 @@ public class GameManager : MonoBehaviour {
             mazeInstanceBrick1.setPosition(mazePos1);
             mazeInstanceBrick1.SetStartPoint(0, 1);
             mazeInstanceBrick1.SetEndPoint(20, 19);
-            mazeInstanceBrick1.Generate(true, 1);
+            mazeInstanceBrick1.Generate(true, 2);
 
             //spawn reward: hammer
             v.x = 300;
@@ -114,9 +113,14 @@ public class GameManager : MonoBehaviour {
             mazeInstanceBrick2.setPosition(mazePos2);
             mazeInstanceBrick2.SetStartPoint(0, 19);
             mazeInstanceBrick2.SetEndPoint(19, 0);
-            mazeInstanceBrick2.Generate(true, 2);
+            mazeInstanceBrick2.Generate(true, 4);
 
             //spawn reward: double jump
+            v.x = 0;
+            v.y = (v.y - 90) % 360;
+            v.z = 0;
+            createLoot<boots>(new IntVector2(236, -97), bootsPrefab, v);
+
 
         }
         else if(x == 236 && z == -217)
@@ -127,9 +131,14 @@ public class GameManager : MonoBehaviour {
             mazeInstanceMetal.setPosition(mazePos3);
             mazeInstanceMetal.SetStartPoint(19, 20);
             mazeInstanceMetal.SetEndPoint(0, 1);
-            mazeInstanceMetal.Generate(true, 3);
+            mazeInstanceMetal.Generate(true, 6);
 
-            //spawn reward: bow and arrow
+            //spawn reward: potion
+            //boots1
+            v.x = 325;
+            v.y = (v.y - 90) % 360;
+            v.z = 0;
+            createLoot<potion>(new IntVector2(236, -217), potionPrefab, v);
         }
         else
         {
@@ -139,7 +148,7 @@ public class GameManager : MonoBehaviour {
             mazeInstanceTron.setPosition(mazePos4);
             mazeInstanceTron.SetStartPoint(20, 1);
             mazeInstanceTron.SetEndPoint(1, 20);
-            mazeInstanceTron.Generate(true, 4);
+            mazeInstanceTron.Generate(true, 8);
 
             //spawn reward: ??
         }
@@ -172,13 +181,21 @@ public class GameManager : MonoBehaviour {
 
     public void generateMaze(string mazeToGen)
     {
+        if (mazeToGen == "brick1")
+        {
+            mazeInstanceBrick1 = Instantiate(mazeBrick1) as Maze;
+            mazeInstanceBrick1.setPosition(mazePos1);
+            mazeInstanceBrick1.SetStartPoint(0, 1);
+            mazeInstanceBrick1.SetEndPoint(20, 19);
+            mazeInstanceBrick1.Generate(false, 1);
+        }
         if (mazeToGen == "brick2")
         {
             mazeInstanceBrick2 = Instantiate(mazeBrick2) as Maze;
             mazeInstanceBrick2.setPosition(mazePos2);
             mazeInstanceBrick2.SetStartPoint(0, 19);
             mazeInstanceBrick2.SetEndPoint(19, 0);
-            mazeInstanceBrick2.Generate(false, 2);
+            mazeInstanceBrick2.Generate(false, 3);
         }
         if (mazeToGen == "metal")
         {
@@ -186,7 +203,7 @@ public class GameManager : MonoBehaviour {
             mazeInstanceMetal.setPosition(mazePos3);
             mazeInstanceMetal.SetStartPoint(19, 20);
             mazeInstanceMetal.SetEndPoint(0, 1);
-            mazeInstanceMetal.Generate(false, 3);
+            mazeInstanceMetal.Generate(false, 5);
         }
         if(mazeToGen == "tron")
         {
@@ -194,7 +211,7 @@ public class GameManager : MonoBehaviour {
             mazeInstanceTron.setPosition(mazePos4);
             mazeInstanceTron.SetStartPoint(20, 1);
             mazeInstanceTron.SetEndPoint(1, 20);
-            mazeInstanceTron.Generate(false, 4);
+            mazeInstanceTron.Generate(false, 7);
         }
     }
 }

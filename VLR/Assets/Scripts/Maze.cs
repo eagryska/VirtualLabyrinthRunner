@@ -21,6 +21,9 @@ public class Maze : MonoBehaviour
     public MazePushObstacle pushPrefab;
     public MazeVine vinePrefab;
 
+    //money
+    public rotate coinPrefab;
+
     private WallType[,] mazeData;
 
     private IntVector2 mazePos;
@@ -103,10 +106,14 @@ public class Maze : MonoBehaviour
         {
             r.material = materials[2];
         }
-        /*foreach (Renderer r in jumpPrefab.GetComponentsInChildren<Renderer>())
+        foreach (Renderer r in breakablePrefab.GetComponentsInChildren<Renderer>())
+        {
+            r.material = materials[3];
+        }
+        foreach (Renderer r in jumpPrefab.GetComponentsInChildren<Renderer>())
         {
             r.material = materials[2];
-        }*/
+        }
     }
 
     private void initMazeData()
@@ -278,13 +285,63 @@ public class Maze : MonoBehaviour
                     createPrefab<MazeFloor>(pos, dir, floorPrefab);
                     if(hasCeiling)
                         createPrefab<MazeCeiling>(pos, ceilingPrefab);
+                    if (pos.x != doorEntrance.x && pos.z != doorEntrance.z)
+                    {
+                        if (rollRandom(7))
+                        {
+                            createPrefab<MazeVine>(pos, vinePrefab);
+                            createPrefab<MazeDoor>(pos, doorPrefab);
+                            randomlyAddCoin(pos, 1.5f, 10);
+                        }
+                        else if (mazeNum >= 2 && rollRandom(5))
+                        {
+                            //CALC THE ORIENTATION
+                            MazeDirection facing = MazeDirection.East;
+                            createPrefab<MazeBreakable>(pos, facing, breakablePrefab);
+                        }
+                        else if (mazeNum >= 4 && rollRandom(5))
+                        {
+                            createPrefab<MazeJumpObstacle>(pos, jumpPrefab);
+                            randomlyAddCoin(pos, 4.5f, 10);
+                        }
+                        else if (mazeNum >= 6 && rollRandom(5))
+                        {
+                            createPrefab<MazePushObstacle>(pos, pushPrefab);
+                        }
+                        else
+                        {
+                            randomlyAddCoin(pos, 1.5f, 10);
+                        }
+                    }
                 }
             }
         }
     }
 
+    private bool rollRandom(int chance)
+    {
+        if (Random.Range(0, 100) > (100 - chance))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool randomlyAddCoin(IntVector2 pos, float z, int chance)
+    {
+
+        if (Random.Range(0, 100) > (100-chance))
+        {
+            createPrefab<rotate>(pos, z, coinPrefab);
+            return true;
+        }
+        return false;
+    }
+
     private T createPrefab<T>(IntVector2 coordinates, MonoBehaviour type) where T : MonoBehaviour
     {
+        return createPrefab<T>(coordinates, -.195f, type);
+
         T mazeObject = Instantiate(type) as T;
         (mazeObject).name = type.name + " " + coordinates.x + ", " + coordinates.z;
         if (!(mazeObject is TreasureChest))
@@ -292,6 +349,18 @@ public class Maze : MonoBehaviour
             mazeObject.transform.parent = transform;
         }
         mazeObject.transform.localPosition = new Vector3(coordinates.x * 4 + mazePos.x, -.195f, coordinates.z * 4 + mazePos.z);
+        return mazeObject;
+    }
+
+    private T createPrefab<T>(IntVector2 coordinates, float z, MonoBehaviour type) where T : MonoBehaviour
+    {
+        T mazeObject = Instantiate(type) as T;
+        (mazeObject).name = type.name + " " + coordinates.x + ", " + coordinates.z;
+        if (!(mazeObject is TreasureChest))
+        {
+            mazeObject.transform.parent = transform;
+        }
+        mazeObject.transform.localPosition = new Vector3(coordinates.x * 4 + mazePos.x, z, coordinates.z * 4 + mazePos.z);
         return mazeObject;
     }
 

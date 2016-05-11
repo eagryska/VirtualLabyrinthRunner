@@ -24,7 +24,7 @@ public class launchArrow : MonoBehaviour {
         if(fired)
         {
             this.transform.Translate(Vector3.down * speed * Time.deltaTime);
-			RaycastHit hit;
+			/*RaycastHit hit;
 			Ray landingRay = new Ray(this.gameObject.transform.position, this.gameObject.transform.up);
 			Debug.DrawLine(this.gameObject.transform.position, this.gameObject.transform.up, Color.red);
 			
@@ -36,7 +36,13 @@ public class launchArrow : MonoBehaviour {
                     //Destroy(hit.collider.gameObject);
                     fired = false;
 				}
-			}
+			}*/
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        fired = false;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 }
