@@ -6,18 +6,29 @@ public class conversation : MonoBehaviour {
     public string[] lines;
     public string[] exhaustedLines;
     public GameObject textBubble;
-    public beachDoor beachDoors;
-    public bool beachGob;
+
+    public beachDoor doorsToOpen;
+    public beachDoor doorsToClose;
+    public bool triggerOpenDoor;
+    public bool triggerCloseDoor;
+    public bool changeMazes;
+    public string mazeToDelete;
+    public string mazeToGen;
+
 
     private int curLine;
     private bool talking;
     private TextMesh t;
     private bool exhausted;
-	// Use this for initialization
-	void Start () {
+    private GameManager gm;
+    private bool deleted;
+    // Use this for initialization
+    void Start () {
         talking = false;
         exhausted = false;
+        deleted = false;
         t = textBubble.GetComponent<TextMesh>();
+        gm = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 	
 	// Update is called once per frame
@@ -31,9 +42,13 @@ public class conversation : MonoBehaviour {
                 {
                     curLine = -1;
                     exhausted = true;
-                    if (beachGob)
+                    if (triggerOpenDoor)
                     {
-                        beachDoors.openDoor();
+                        doorsToOpen.openDoor();
+                    }
+                    if (changeMazes)
+                    {
+                        gm.generateMaze(mazeToGen);
                     }
                 }
             }
@@ -61,6 +76,15 @@ public class conversation : MonoBehaviour {
         if (other.tag == "Player")
         {
             talking = true;
+            if (triggerCloseDoor)
+            {
+                doorsToClose.closeDoor();
+            }
+            //CALL TO GAME MANAGER TO DELETE OLD MAZE
+            if (changeMazes && !deleted)
+            {
+                gm.deleteMaze(mazeToDelete);
+            }
         }
     }
 

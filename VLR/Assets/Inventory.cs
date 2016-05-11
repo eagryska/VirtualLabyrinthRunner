@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour {
     public GameObject defaultHammer;
     public GameObject defaultGun;
 
+    private OVRPlayerController ovrpc;
 
     ArrayList inventory = new ArrayList();
     int currentItemIndex;
@@ -18,6 +19,7 @@ public class Inventory : MonoBehaviour {
 	void Start () {
         currentItemIndex = 0;
         inventory.Add(emptyItem);
+        ovrpc = GameObject.Find("OVRPlayerVLR").GetComponent<OVRPlayerController>();
     }
 
     // Update is called once per frame
@@ -41,25 +43,36 @@ public class Inventory : MonoBehaviour {
                 {
                     Debug.Log("picked");
                     hit.collider.gameObject.transform.parent = this.transform;
-                    if (hit.collider.gameObject.name == "Elven Long Bow")
+                    string hitName = hit.collider.gameObject.name;
+                    if (hitName == "Elven Long Bow")
                     {
                         hit.collider.gameObject.transform.position = defaultBow.gameObject.transform.position;
                         hit.collider.gameObject.transform.rotation = defaultBow.gameObject.transform.rotation;
                     }
-                    else if (hit.collider.gameObject.name == "Torch")
+                    else if (hitName == "Torch")
                     {
                         hit.collider.gameObject.transform.position = defaultTorch.gameObject.transform.position;
                         hit.collider.gameObject.transform.rotation = defaultTorch.gameObject.transform.rotation;
                     }
-                    else if (hit.collider.gameObject.name.Contains("hammer"))
+                    else if (hitName.Contains("hammer"))
                     {
                         hit.collider.gameObject.transform.position = defaultHammer.gameObject.transform.position;
                         hit.collider.gameObject.transform.rotation = defaultHammer.gameObject.transform.rotation;
                     }
-                    else if (hit.collider.gameObject.name.Contains("gun"))
+                    else if (hitName.Contains("gun"))
                     {
                         hit.collider.gameObject.transform.position = defaultGun.gameObject.transform.position;
                         hit.collider.gameObject.transform.rotation = defaultGun.gameObject.transform.rotation;
+                    }
+                    else if (hitName.Contains("boots"))
+                    {
+                        Destroy(hit.collider.gameObject);
+                        //do boot stuff
+                        if(hitName == "boots1")
+                            ovrpc.JumpForce = 1.1f;
+                        if (hitName == "boots2")
+                            ovrpc.Acceleration = .15f;
+                        return;
                     }
                     else
                     {
@@ -71,6 +84,10 @@ public class Inventory : MonoBehaviour {
                     inventory.Add(hit.collider.gameObject);
                 }
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameObject.Find("OVRPlayerVLR").GetComponent<OVRPlayerController>().Jump();
         }
     }
 }

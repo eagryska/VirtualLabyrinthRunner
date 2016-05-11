@@ -32,7 +32,7 @@ public class TreasureChest : MonoBehaviour {
             Debug.Log("OPEN");
             GetComponent<Animation>().Play("box_open");
             gm = GameObject.FindObjectOfType<GameManager>();
-            gm.regenerate(transform.position.x, transform.position.z);
+            gm.regenerate(transform.position.x, transform.position.z, transform.rotation.eulerAngles);
             counter += 1;
         }
 

@@ -8,11 +8,18 @@ public class Maze : MonoBehaviour
     public IntVector2 mazeSize;
     public bool hasCeiling;
 
+    //maze core
     public MazeWall wallPrefab;
     public MazeDoor doorPrefab;
     public MazeFloor floorPrefab;
     public MazeCeiling ceilingPrefab;
     public TreasureChest treasurePrefab;
+
+    //obstacles
+    public MazeBreakable breakablePrefab;
+    public MazeJumpObstacle jumpPrefab;
+    public MazePushObstacle pushPrefab;
+    public MazeVine vinePrefab;
 
     private WallType[,] mazeData;
 
@@ -96,6 +103,10 @@ public class Maze : MonoBehaviour
         {
             r.material = materials[2];
         }
+        /*foreach (Renderer r in jumpPrefab.GetComponentsInChildren<Renderer>())
+        {
+            r.material = materials[2];
+        }*/
     }
 
     private void initMazeData()

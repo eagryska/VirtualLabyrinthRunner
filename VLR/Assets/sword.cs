@@ -3,6 +3,8 @@ using System.Collections;
 
 public class sword : MonoBehaviour
 {
+    public int hitsToKill;
+
     private GameObject defaultSwing;
     private GameObject mydefault;
 
@@ -60,9 +62,10 @@ public class sword : MonoBehaviour
             if (hit.collider.gameObject.tag == "vine")
             {
                 numHits++;
-                if (numHits == 3)
+                if (numHits == hitsToKill)
                 {
                     Destroy(hit.collider.gameObject);
+                    numHits = 0;
                 }
             }
             else

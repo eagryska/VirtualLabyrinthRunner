@@ -8,19 +8,10 @@ public class beachDoor : MonoBehaviour {
     public GameObject leftHinge;
     public GameObject rightHinge;
 
-    private bool opened;
-
-    float smooth = 2.0f;
-    float DoorOpenAngle;
-
-    private Vector3 defaultRot;
-    private Vector3 openRot;
-
-    // Use this for initialization
-    void Start () {
-        opened = false;
-        DoorOpenAngle = 0.0f;
-    }
+    public bool opened;
+    public bool closed;
+    
+    public float DoorOpenAngle;
 	
 	// Update is called once per frame
 	void Update () {
@@ -30,6 +21,12 @@ public class beachDoor : MonoBehaviour {
             leftDoor.transform.RotateAround(leftHinge.transform.position, Vector3.up, Time.deltaTime * -20);
             rightDoor.transform.RotateAround(rightHinge.transform.position, Vector3.up, Time.deltaTime * 20);
         }
+        else if(closed && DoorOpenAngle > 0)
+        {
+            DoorOpenAngle -= Time.deltaTime * 60;
+            leftDoor.transform.RotateAround(leftHinge.transform.position, Vector3.up, Time.deltaTime * 60);
+            rightDoor.transform.RotateAround(rightHinge.transform.position, Vector3.up, Time.deltaTime * -60);
+        }
     }
 
     public void openDoor()
@@ -37,6 +34,16 @@ public class beachDoor : MonoBehaviour {
         if (!opened)
         {
             opened = true;
+            closed = false;
+        }
+    }
+
+    public void closeDoor()
+    {
+        if (!closed)
+        {
+            closed = true;
+            opened = false;
         }
     }
 }

@@ -10,6 +10,12 @@ public class gun : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (tag == "item")
+        {
+            Vector3 oldRot = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(new Vector3(oldRot.x, oldRot.y + Time.deltaTime * 20, oldRot.z));
+        }
+
         if (Input.GetMouseButtonDown(0) && tag == "inventory")
         {
             RaycastHit hit;
