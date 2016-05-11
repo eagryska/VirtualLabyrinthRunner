@@ -5,12 +5,10 @@ public class GobScript : MonoBehaviour {
 
     private Animation anim;
     private float counter;
-    private bool keepPlaying;
+
 	// Use this for initialization
 	void Start () {
         anim = GetComponent<Animation>();
-        keepPlaying = true;
-        //StartCoroutine(MyCoroutine());
     }
 
     private IEnumerator MyCoroutine(string name1, string name2)

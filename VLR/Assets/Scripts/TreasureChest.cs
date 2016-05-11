@@ -6,13 +6,7 @@ public class TreasureChest : MonoBehaviour {
     public int counter;
     public MonoBehaviour[] possibleContents;
 
-    private int contentIndex;
     private GameManager gm; 
-
-    public void setContentIndex(int newIndex)
-    {
-        contentIndex = newIndex;
-    }
 
     // Use this for initialization
     void Start()

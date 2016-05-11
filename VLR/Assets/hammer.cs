@@ -87,7 +87,6 @@ public class hammer : MonoBehaviour
                 if(numHits == hitsToKill)
                 {
                     Transform t = hit.transform;
-                    Material m = t.GetComponent<Renderer>().material;
                     MazeBroken mazeObject = Instantiate(brokenPrefab) as MazeBroken;
                     (mazeObject).name = brokenPrefab.name + " " + t.position.x + ", " + t.position.z;
                     mazeObject.transform.rotation = t.parent.rotation;
