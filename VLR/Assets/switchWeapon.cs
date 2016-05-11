@@ -53,15 +53,18 @@ public class switchWeapon : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             myitem = GameObject.Find(swing);
-            if (myitem.tag == "inventory_potion")
+            if (myitem != null)
             {
-                flag = 3;
-            }
-            else if (myitem.tag == "inventory_swing")
-                flag = 1;
-            else
-            {
-                flag = 0;
+                if (myitem.tag == "inventory_potion")
+                {
+                    flag = 3;
+                }
+                else if (myitem.tag == "inventory_swing")
+                    flag = 1;
+                else
+                {
+                    flag = 0;
+                }
             }
         }
         if(flag == 1)

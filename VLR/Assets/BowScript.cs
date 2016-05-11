@@ -4,7 +4,6 @@ using System.Collections;
 public class BowScript : MonoBehaviour {
 
 	public int range = 1000;
-	public LineRenderer guide = null;
 	public GameObject arrow = null;
 
 	private Vector3 startPos = Vector3.zero;
@@ -14,7 +13,6 @@ public class BowScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		guide = this.gameObject.GetComponent<LineRenderer> ();
         startPos = this.transform.position;
     }
 	

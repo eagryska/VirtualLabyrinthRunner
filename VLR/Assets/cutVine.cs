@@ -23,11 +23,14 @@ public class cutVine : MonoBehaviour {
         line.SetPosition(0, landingRay.origin);
         if (Physics.Raycast(landingRay, out hit, 2))
         {
-            line.SetPosition(1, hit.point);
-            if (hit.collider.tag == "vine" && flag == true)
+            if (transform.parent.tag == "Player")
             {
-                Destroy(hit.transform.gameObject);
-                flag = false;
+                //line.SetPosition(1, hit.point);
+                if (hit.collider.tag == "vine" && flag == true)
+                {
+                    Destroy(hit.transform.gameObject);
+                    flag = false;
+                }
             }
         }
         flag = false;
